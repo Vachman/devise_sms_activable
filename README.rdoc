@@ -44,8 +44,11 @@ Please refer to {Devise's README}[http://github.com/plataformatec/devise] for mo
 The model is specular to the Devise's own Confirmable model. It only requires the user to supply a valid phone number.
 
 On registration it will send an SMS with a token to be inserted to complete activation process.
+
 By default users MUST activate by SMS before entering.
+
 If you want something more "relaxed" just override <tt>sms_confirmation_required?</tt> in your model and make it your way.
+
 You can use the convenience filter <tt>require_sms_activated!</tt> in your controller to block sms-unactive users from specific pages.
 
 == Controller filter

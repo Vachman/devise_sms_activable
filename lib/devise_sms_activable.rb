@@ -16,15 +16,16 @@ module Devise
   
   # Get the sms sender class from the mailer reference object.
   def self.sms_sender
-    @@sms_sender_ref.get
+    @@sms_sender_ref.get(@@sms_sender_class_name)
   end
 
   # Set the smser reference object to access the smser.
   def self.sms_sender=(class_name)
+    @@sms_sender_class_name = class_name
     @@sms_sender_ref = ActiveSupport::Dependencies.reference(class_name)
   end
   
   self.sms_sender = "Devise::SmsSender"
-end
+end 
 
 Devise.add_module :sms_activable, :model => "models/sms_activable", :controller => :sms_activations, :route => :sms_activation

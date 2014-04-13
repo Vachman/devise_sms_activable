@@ -69,10 +69,19 @@ module Devise
       # by verifying whether a user is active to sign in or not. If the user
       # is already confirmed, it should never be blocked. Otherwise we need to
       # calculate if the confirm time has not expired for this user.
-
-      def active?
-        !sms_confirmation_required? || confirmed_sms? || confirmation_sms_period_valid?
+      def active_for_authentication?
+        super && (!sms_confirmation_required? || confirmed_sms? || confirmation_sms_period_valid?)
       end
+      
+
+      # def active?
+      #   
+      #   puts "!sms_confirmation_required?: #{!sms_confirmation_required?}"
+      #   puts "confirmed_sms?: #{confirmed_sms?}"
+      #   puts "confirmation_sms_period_valid?: #{!confirmation_sms_period_valid?}"
+      #   
+      #   !sms_confirmation_required? || confirmed_sms? || confirmation_sms_period_valid?
+      # end
 
       # The message to be shown if the account is inactive.
       def inactive_message
@@ -164,7 +173,7 @@ module Devise
 
           def generate_small_token(column)
             loop do
-              token = Devise.friendly_token[0,5].upcase
+              token = rand(10000..99999).to_s
               break token unless to_adapter.find_first({ column => token })
             end
           end
