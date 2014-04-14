@@ -1,8 +1,9 @@
 class Devise::SmsActivationsController < DeviseController
+  append_before_filter :authenticate_scope!
 
   # GET /resource/sms_activation/new
   def new
-    build_resource({})
+    # build_resource({})
     render :new
   end
 
@@ -20,7 +21,7 @@ class Devise::SmsActivationsController < DeviseController
   
   # GET /resource/sms_activation/insert
   def insert
-    build_resource({})
+    # build_resource({})
   end
   
   # GET or POST /resource/sms_activation/consume?sms_token=abcdef
@@ -36,9 +37,9 @@ class Devise::SmsActivationsController < DeviseController
   end
   
   protected
-  
-    def build_resource(hash = nil)
-      self.resource = resource_class.new
+    # Authenticates the current scope and gets the current resource from the session.
+    def authenticate_scope!
+      send(:"authenticate_#{resource_name}!", force: true)
+      self.resource = send(:"current_#{resource_name}")
     end
-
 end
