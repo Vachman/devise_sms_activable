@@ -1,9 +1,9 @@
 class Devise::SmsActivationsController < DeviseController
+  skip_before_filter :require_sms_activated!
   append_before_filter :authenticate_scope!
 
   # GET /resource/sms_activation/new
   def new
-    # build_resource({})
     render :new
   end
 
@@ -21,7 +21,7 @@ class Devise::SmsActivationsController < DeviseController
   
   # GET /resource/sms_activation/insert
   def insert
-    # build_resource({})
+    render :insert
   end
   
   # GET or POST /resource/sms_activation/consume?sms_token=abcdef
